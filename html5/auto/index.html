@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .mouth {
+      stroke-dasharray: 60, 95;  
+      /* 95是圆的全周长 此时全部设为虚的部分，60则是指定实线部分，可以从1设定看出从哪里开始 */
+      transform: rotate(-26deg);
+      transform-origin: 50px 70px;
+      /* 设置哪个点不动，其他围绕这个点动 也可以起到移动图片的效果*/
+    }
+  </style>
+</head>
+<body>
+  <div style="width:300px;height:300px;margin:200px auto;position:relative;">
+    <div style="color:#666;position: absolute;
+    top:-25px;width:230px;left:-10px;">
+      0,0<span style="float:right;">X</span>
+    </div>
+    <div style="color:#666;position: absolute;
+    top:200px;left:-15px;">
+      <span style="float:right;">Y</span>
+    </div>
+    <!-- svg 矢量图标签，有一些数学图形绘制标签，可用于绘制数学图形特效图，比如直线，数据图 
+      viewBox 视窗大小，也就是可绘制部分 从0 0 到 200 200 每条线上有200个绘制像素 
+      其绘制标签来自于命名空间 xmlns-->
+    <svg width="400" height="400" viewBox="0 0 200 200" 
+    xmlns="http://www.w3.org/2000/svg"
+    style="position:absolute;left:-40px;top:-40px;">
+    <!-- stroke 绘制一下 stroke-dasharray将线变为虚线了 2 2表示两个像素的实线，两个像素的虚线-->
+      <line x1="20" y1="40" x2="120" y2="40" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="20" y1="60" x2="120" y2="60" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="20" y1="80" x2="120" y2="80" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="20" y1="100" x2="120" y2="100" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="20" y1="120" x2="120" y2="120" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      
+      <!--良好的编程习惯：插入注释 当html标签比较长的。-->
+      <!--Y坐标辅助线-->
+      <line x1="40" y1="20" x2="40" y2="120" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="60" y1="20" x2="60" y2="120" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="80" y1="20" x2="80" y2="120" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="100" y1="20" x2="100" y2="120" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+      <line x1="120" y1="20" x2="120" y2="120" style="stroke:#e5e5e5;stroke-dasharray:2 2;"/>
+    <!--X轴-->
+      <line x1="20" y1="20" x2="130" y2="20" style="stroke:#666;"/>
+      <line x1="128" y1="18" x2="130" y2="20" style="stroke:#666;"/>
+      <line x1="128" y1="22" x2="130" y2="20" style="stroke:#666;"/>
+
+    <!--Y轴-->
+      <line x1="20" y1="20" x2="20" y2="130" style="stroke:#666;"/>
+      <line x1="18" y1="128" x2="20" y2="130" style="stroke:#666;"/>
+      <line x1="22" y1="128" x2="20" y2="130" style="stroke:#666;"/>
+      
+    </svg>
+    <!--坐标系绘制 物理大小width height-->
+    <svg viewBox="0 0 100 100" width="200" height="200"
+    xmlns="http://www.w3.org/2000/svg"
+    style="position: absolute; left: 0; top: 0;">
+    <!-- canvas 复杂 需要会大量的api svg 通过标签替代了这些api  path 路径 
+    从移动的点到另一个点的全部内容区，进行填充-->
+      <path d="M 20 40  L 80 40 L 80 90 A 10 10 90 0 1 70 100 L 30 100 A 10 10 90 0 1 20 90"
+        style="fill:#e9e9ee"/>
+       <circle class="eye" cx="40" cy="60" r="2.5" style="fill:#fff"/>
+       <circle class="eye" cx="60" cy="60" r="2.5" style="fill:#fff"/>
+       <circle class="mouth" cx="50" cy="70" r="15"
+        style="fill:none;stroke:#fff;stroke-width:5;
+        stroke-linecap:round;"/>
+    </svg>
+  </div>
+</body>
+</html>

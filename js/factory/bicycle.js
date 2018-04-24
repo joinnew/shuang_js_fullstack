@@ -50,7 +50,6 @@ Bicycle.prototype = {
         bicycle.wash();
         bicycle.provideRepair();
         // 把车卖出去 
-
         return bicycle;
 
     }

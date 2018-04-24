@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Template String</title>
+</head>
+<body>
+    <p>
+        es6 更简洁，高效，优雅，面向未来
+
+    </p>
+    <ul id="dogs">
+
+    </ul>
+    <script>
+        // 能用const 就用const
+        const name = "张双双";
+        const age = 18;
+        // ``字符串模板
+        const sentence = `My Friend ${name} is ${age} years old! Always!`;
+        // 编译 RHS
+        // var sent = 'My Friend ' + name + 'is' + age +''
+        console.log(sentence);
+
+        const dogs = [
+            { name: 'Snickers', age: 2 },
+            { name: 'Hugo', age: 1},
+            { name: 'Sunny', age: 8}
+        ];
+
+
+        /**
+         * getOneDogHtml 返回单条狗的html
+         * params: dog 类型 json key {name age}
+         * return li结点
+        */
+        // function getOneDogHtml(dog) {
+        //     const oLi = document.createElement('li');
+        //     const strDog = `My Dog ${dog.name} is ${dog.age} years old!`;
+        //     oLi.appendChild(document.createTextNode(strDog));
+        //     return oLi;
+        // }
+
+        const oUL = document.querySelector('#dogs');
+        // for(let i = 0; i < dogs.length; i++){
+        //     // 创建一个li html标签可以通过js 创建
+        //     // 1 createElement 2 appendChild 挂上去
+        //     // const oLi = document.createElement('li');
+        //     // const strDog = `${dogs[i].name} is ${dogs[i].age} years old!`;
+        //     // oLi.appendChild(
+        //     //     document.createTextNode(strDog)
+        //     // );
+        //     // oUL.appendChild(oLi);
+        //     oUL.appendChild(getOneDogHtml(
+        //         dogs[i]
+        //     ));
+
+        // }
+
+        // const html = `
+        //     <li>the first dog's name is ${dogs[i].name},it's age is ${dogs[i].age}</li>
+        //     <li></li>
+        //     <li></li>
+        // `
+        // oUL.innerHTML = html;
+
+        // 字符串模板让html模板组装变得很优雅。
+
+        // 字符串模板支持换行， 有点像html
+        // const markup = map(dogs => {
+        //     return `
+        //         <li>My Dog is ${dogs.name} , ${dogs.age} years old!</li>
+        //     `
+        // })
+
+
+        // 先把其变为 <li>My Dog Hugo is 7</li>,join则把数组的内容链接为一个字符串
+        const markup = `
+            ${
+                dogs.map(dog => `
+                    <li>${dog.name} is ${dog.age * 7}</li>
+                `).join('')
+            }
+        `
+        oUL.innerHTML = markup;
+    </script>
+</body>
+</html>

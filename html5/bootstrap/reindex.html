@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+        <table class="table" id="stuTable">
+            <thead>
+                <tr>
+                <th>姓名</th>
+                <th>籍贯</th>
+                <th>QQ</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </div>
+    </div>  
+</div>  
+    <script>
+
+        function setStudentsHTML(students) {
+            const html = students.map(student => `
+                    <tr>
+                        <td>${student.name}</td>
+                        <td>${student.hometown}</td>
+                        <td>${student.qq}</td>                        
+                    </tr>
+                `).join('');
+            document.querySelector('#stuTable tbody').innerHTML = html;
+        }
+        window.onload = function() {
+            console.log('测试onload函数是否有用');
+            fetch('https://www.easy-mock.com/mock/5aded0f5c57e6f08ff165a6c/students/infos')
+                .then(data => dats.json())
+                .then(data => {
+                const students = data.data.students;
+                console.log('测试函数setStudentsHTML是否被调用');               
+                setStudentsHTML(students);
+            })
+        }
+    </script>
+</body>
+</html>

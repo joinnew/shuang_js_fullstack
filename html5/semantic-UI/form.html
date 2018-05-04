@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>semantic-ui form</title>
+    <!-- 引入框架 -->
+    <!-- 顺序 css先放上面 semantic的js依赖于jquery 所以要放在jquery的下面 
+        css 放在js之前的原因：页面需要先做布局的渲染    
+    -->
+    <link href="https://cdn.bootcss.com/semantic-ui/2.3.1/semantic.min.css" rel="stylesheet"/>
+ 
+</head>
+<body>
+    <!-- 做电脑站的时候，同时能兼容移动端 移动端：抽屉式菜单 -->
+    <!-- 1.responsive web design 全部可适应
+    2.整站开发框架 丰富的样式库级插件机制，满足开发
+    3. jquery 是它的 css,js 都有 
+    跟vue react 结合也比较好
+    css 预编译系统支持也很好styl。
+    特色：类名系统 ， 极其简单强大 -->
+    <!-- 放在尾部 等待dom树渲染完成之后在做script文件的引入，放到头部，会阻塞dom树的渲染 script文件的位置会按顺序来-->
+    <script src="http://www.semantic-ui.cn/examples/assets/library/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/semantic-ui/2.3.1/semantic.min.js"></script>
+    <script>
+        // 怎么更加优化？jquery离开我们的视野：因为它太大了，重
+        $(function() {
+
+        })
+    </script>
+</body>
+</html>

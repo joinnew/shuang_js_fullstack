@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>懒加载图片</title>
+</head>
+
+<body>
+    <!--  -->
+    <!-- 网页在渲染的时候，
+    http请求数量会阻碍 
+    chrome 性能最好，同时并发的请求数十几个
+    将图片下载 放到dom ready 事件之后 将有效提升网页打开速度（不是一开始就这样么？不，之前是不管图片有没有下载好，采用的异步加载方式，现在是完全把它放在ready事件之后）
+    占位图片，只用一次请求
+    优化前 n张图片 url 不一样 http请求数是 n
+    优化后 图片上的http 数量只有 1
+    如果url 一样，不会重复发送请求 因缓存机制-->
+    <img class="pic1" src="http://static.youku.com/yk/vmanage/img/manage/video/mask.d53611efc6.png" origin_src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525426776326&di=e42c5ffb6c43cb733d564441599cac9b&imgtype=0&src=http%3A%2F%2Fimg4q.duitang.com%2Fuploads%2Fitem%2F201505%2F31%2F20150531223450_jUZHz.jpeg"
+        alt="">
+    <img src="http://static.youku.com/yk/vmanage/img/manage/video/mask.d53611efc6.png" origin_src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525427889452&di=e1bfe1100bd9e5b43d3277085db43b51&imgtype=0&src=http%3A%2F%2Fa3.topitme.com%2F1%2F38%2F5c%2F1130216151d565c381o.jpg"
+        alt="">
+    <script src="./lazyload.js"></script>
+    <script>
+        window.onload = function () {
+            const img = document.querySelector('.pic1');
+            LazyLoadImage.setSrc(img);
+            // LazyLoadImage就是一个命名空间，里面包括自己的一些东西
+        }
+        // 已经是用户看到了网页了，dom ready
+        // 优化图片下载，将其推后， 
+        // window.onload = function() {
+        //     // 在页面打开后，重新下载图片
+        //     const img = document.querySelector('.pic1');
+        //     // origin_src 自定义属性
+        //     const url = img.getAttribute('origin_src');
+        //     console.log(url);
+        //     // 图片不要直接url 设置过去 
+        //     const oImg = document.createElement('img');
+        //     oImg.style.display = 'none';
+        //     document.body.appendChild(oImg);
+        //     // 图片加载之后，使用触发
+        //     oImg.onload = function() {
+        //         // 幕后工作者 已经下载了图片
+        //         // url 一旦下载，会在浏览器缓存（静态文件会缓存css html）文件中
+        //         img.src = url;  //此时图片在缓存中，是已经下好的，直接用就好。
+        //     }
+
+        //     // 图片的下载是异步的，图片有大小，直接替换，不同的图片下载时间是不同的
+        //     oImg.src = url;  //会在onload oImg事件之前在弄，通过这种方式确保图片资源会完全下载好，且此时为隐藏形式
+
+        //     // img.src = url;这种方式拿来就替换，太直接，若图片过多，请求也会增加，图片会一点一点的加载出来。src一下子设置为url，图片大的话，会一点一点的加载
+        //     // img.setAttribute('src',url);两种方式都可以，对于自定义的属性通过getttribute方式，自带属性可以通过Attribute 也可以是标签.属性（img.src）
+        // }
+    </script>
+</body>
+
+</html>

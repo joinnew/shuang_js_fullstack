@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525327929710&di=9aa2bd5e32164164df56390f0b71040a&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D2439355652%2C1852440864%26fm%3D214%26gp%3D0.jpg" alt="" />
+    <script>
+        // 报错：在window上没有$
+        // $ 就是jQuery 是window 唯一的命名空间，只放$作为全局对象
+        // $() $ => 好像是一个function callback 回调函数
+        // 那么 function() {}就是一个参数
+        (function(g) {
+            // 注：$也可做为命名
+            g.$ = function(param) {
+
+            }
+        })(window)//立即执行函数，不会污染全局，且立刻开辟空间用于执行
+        $(function() {
+            $('#root').html('莹宝最漂亮了！！！！');
+        })
+        // img 结点 node 
+        // node结点形成了DOM树
+        // dom api appendChild .style.background 发生在树成型（结构html，样式css都已经弄好）之前
+        // 要有原材料：html  css（输入一个url后，服务器会把html取过来，把body部分的标签代码拿出来,形成dom树的结构，确定了结构层次，读取css文件，再将css的结点挂载上去）
+        // 树成型了后，触发dom ready事件
+        // 解析html构建dom tree: 
+        //     构建渲染树（解析css）:css是也构建为一个数据结构，在挂载
+        //     布局渲染树
+        //     页面的绘制 render 样式 绘制的过程
+        // src 会触发新的下载 新的http请求 异步 与dom树无关 也就是不会等待图片下载好之后再显示页面
+        // 网页内容下载完成 资源（所有需要http请求的都市资源 img script ）性能优化的概念：尽可能早的显示页面，有些资源没有显示出来也无所谓
+        // window.onload 
+        // js 下载有阻塞问题 
+        // 放到底部，如果需求并不复杂，为了加快速度，选择弃用框架:如果不用jquery框架，怎么去实现这些功能$()
+        window.onload = function() {
+            console.log('页面加载完成');
+        }
+        // 会发生早一些， DOM ready事件 为什么早一些？
+        // 网页渲染页面的生命周期 ，http三次握手建立连接后，就会进行DOM 渲染，如何做好网页优化？快速打开网页
+        // 使用ready事件 在dom 结构的布局显示之后，就立即执行，不论其他资源有没有到位
+        $(function() {
+            console.log('DOM ready');
+        })
+    </script>
+</body>
+</html>

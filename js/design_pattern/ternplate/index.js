@@ -96,7 +96,7 @@
 // Beverage.prototype.pourInCup = function() {}
 // Beverage.prototype.addCondiments = function() {}
 // Beverage.prototype.init = function() {
-//     this.boilWater();
+//     this.boilWater();/
 //     this.brew();
 //     this.pourInCup();
 //     this.addCondiments();

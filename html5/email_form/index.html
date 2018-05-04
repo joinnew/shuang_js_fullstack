@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5 表单API </title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- html5 API 阻止了一些错误，让提交体验更细致 -->
+    <!-- input 各种 type 适合各种类型的数据
+    text password email number tel 浏览器内置了对这些类型的检测
+    自动去阻止表单提交，
+    IE不支持这些 hml5能力 IE9+才支持 -->
+    <div class="container">
+        <form name="loginForm">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <div class="row">
+            <ul id="emails">
+                
+            </ul>
+        </div>
+    </div>
+    <script>
+        // 作用域 scope
+        (function() {
+            // 局部变量
+            var b = 200;
+            window.a = 10;
+            // 此时c d就为私有变量
+            var c = 300;
+            var d = 400;
+            // console.log(this); 结果时this
+
+            // es6 中若key与value一样，则可省略写法 a:a, => a,
+            // return {
+            //     a: a,
+            //     b: b
+            // };
+            // 这样的话，只有一个命名空间
+            const oForm = document.forms['loginForm'];
+            const arrEmail = [];
+            loadEmail();
+            // this 会多变？ 就是this定不下来的，它跟函数的执行方式有关
+            // 如果是普通函数function add(){}，作为事件的回调函数被执行，只有在执行的那一刻才确定this是谁，this会指向事件发生的元素
+            // 此时this 指向oForm 则可以通过其name值找到
+            oForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                // const oEmail = document.getElementById('exampleInputEmail1');  //性能最快 id 索引，
+                // js 查找变量的方式 
+                // 1 在本作用域内查找
+                // 2 如果1找不到，那就去父级作用域，
+                // 3 尽头是window;
+                const oEmail = oForm.email;
+                // console.log(oEmail);
+                const strEmail = oEmail.value.trim();
+                if (!strEmail) {
+                    alert('请输入邮箱');
+                    return;
+                }
+
+                // 验证邮箱格式 正则
+                // 验证文本符合某种规则的机制
+                // @前后两部分 .com .cn
+                const reg = /^([a-zA-Z0-9_-]+)@([A-Za-z0-9_-]+)(.[a-zA-Z0-9_-]+)/; //^表示从开始的位置开始匹配
+                // reg.test('字符串'); 检测该字符串是否合乎该正则表达式 其结果为true/false
+                // '字符串'.match(reg); 得到分组  分组是根据正则表达式的来的，也就是括号()部分，完全由（）控制
+                if (!reg.test(strEmail)) {
+                    alert('邮箱格式有误');
+                    return false;
+                }
+
+                //显示到页面上
+                addEmail(strEmail);
+                saveEmail(strEmail);
+                oForm.reset();
+                // this,指向window 箭头函数内的this 在执行时，this跟父级作用域一致 window
+                // 事件内部 this 会指向事件发生的元素
+                // ie9以下
+                // input type email => Text
+                // 既利用html5 内置的提醒(email)
+            },false);
+            function saveEmail(email) {
+                // 本地存储
+                // key => value 存的不只是字符串， 多个？
+                // 数组对象是不可以存的，toString
+                let strEmail = localStorage.getItem('email');
+                if (strEmail) {
+                    strEmail += `,${email}`;
+                } else {
+                    strEmail = email;                    
+                }
+                localStorage.setItem('email',strEmail);                                        
+                
+            }
+            // 变量查找像冒泡
+            function addEmail(email) {
+                const strHTML = `
+                    <li>
+                        ${email}    
+                    </li>
+                `
+                document.querySelector('#emails').innerHTML += strHTML;
+            }
+
+            // 前端保存数据，可以快速响应界面 记录一些东西
+            function loadEmail() {
+                // 从何加载数据？localStorage 设置key => value 的数据库形式
+                const email = localStorage.getItem('email');
+                if (email.indexOf(',') > -1) {
+                    emails = email.split(',');
+                    for( var i = 0; i < emails.length; i++){
+                        addEmail(email);
+                    }
+                    console.log(email);
+                } else {
+                    addEmail(email);                    
+                }
+            }
+        })()
+        // 要想不return 的情况下，在外部也可以使用a输出相应的值，则需要与window连接，1 可直接在函数内部 使用window.x 因为window是全局变量，也可以在函数内部访问到。同时这将x挂载到全局上了。
+        // 也可以是把window当作参数传递进去
+
+
+        // 全局变量 window 顶级
+        // document 文档
+        // console.log(a);
+        // function add() {
+        //     console.log(this);
+        // }
+        // window.onload = add;
+    </script>
+</body>
+</html>

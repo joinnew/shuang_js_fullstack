@@ -15,12 +15,43 @@
         // $() $ => 好像是一个function callback 回调函数
         // 那么 function() {}就是一个参数
         (function(g) {
-            // 注：$也可做为命名
+            // 只有jquery可以访问到，
+            // 立即执行，函数作用域 好处
+            function ElementWrapper(selector) {
+                        this.ele = document.querySelector(selector);
+                        // 添加判断条件
+                        if (!this.ele)
+                            throw new Error('没有这个元素');
+                    }
+                    // jquery野心，对原生api的封装
+                    // js原生api有很多兼容性问题，选择jquery主要原因
+                    ElementWrapper.prototype = {
+                        html: function(strHTML) {
+                        this.ele.innerHTML = strHTML;
+                    }
+                    } 
+            // 注：$也可做为命名，将匿名函数传递给它，分析$的功能，
+            // jquery 最基本的功能 doready的，等到document全部完成，也就是对document设置监听，整个dom树的顶级对象
             g.$ = function(param) {
+                // 事件注册 dom完成后该事件会触发
+                // 监听一下 dom ready事件，然后把param注册
+                // dom ready事件=》DOMContentLoaded事件在IE低版本中不支持
+                if( typeof param === 'function'){
+                    // 参数进行重载,jquery中同一个$(),其参数可以不一致，使用到了重载函数
+                    document.addEventListener(
+                    'DOMContentLoaded',param,false);
+                }else if(typeof param === 'string'){
+                    // jquery中使用.html 方法的形式 那怎么让其成为一个对象？dom 结点 => 类？
+                    // jquery会为每次结点选择封装成为一个类，从而可以为其添加多种方法，强大起来。
+                    const obj = new ElementWrapper(param);
+                    return obj;
+                }
 
+                    // 当事件发生时，就去调用传递过来的函数param
             }
         })(window)//立即执行函数，不会污染全局，且立刻开辟空间用于执行
         $(function() {
+            // ja 动态语言 随时加属性
             $('#root').html('莹宝最漂亮了！！！！');
         })
         // img 结点 node 
@@ -37,15 +68,15 @@
         // window.onload 
         // js 下载有阻塞问题 
         // 放到底部，如果需求并不复杂，为了加快速度，选择弃用框架:如果不用jquery框架，怎么去实现这些功能$()
-        window.onload = function() {
-            console.log('页面加载完成');
-        }
-        // 会发生早一些， DOM ready事件 为什么早一些？
-        // 网页渲染页面的生命周期 ，http三次握手建立连接后，就会进行DOM 渲染，如何做好网页优化？快速打开网页
-        // 使用ready事件 在dom 结构的布局显示之后，就立即执行，不论其他资源有没有到位
-        $(function() {
-            console.log('DOM ready');
-        })
+        // window.onload = function() {
+        //     console.log('页面加载完成');
+        // }
+        // // 会发生早一些， DOM ready事件 为什么早一些？
+        // // 网页渲染页面的生命周期 ，http三次握手建立连接后，就会进行DOM 渲染，如何做好网页优化？快速打开网页
+        // // 使用ready事件 在dom 结构的布局显示之后，就立即执行，不论其他资源有没有到位
+        // $(function() {
+        //     console.log('DOM ready');
+        // })
     </script>
 </body>
 </html>

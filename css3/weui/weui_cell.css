@@ -1,0 +1,137 @@
+
+.weui-cells__title {
+    margin-top: 0.77em;
+    margin-bottom: .3em;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #808080;
+    font-size: 14px;
+}
+/* 只选择前面有title的cells 两者并存时，这个会覆盖后者，优先级更大，当不存在title时，weui-cells自身也会与上部有一定的间隔
+title存在时，则与上部距离为0*/
+
+.weui-cells__title + .weui-cells {
+    margin-top: 0;
+}
+/* 选择所有的cells */
+.weui-cells {
+    margin-top: 1.17647059em;
+    background-color: #fff;
+    line-height: 1.47058824em;
+    font-size: 17px;
+    overflow: hidden;
+    position: relative;
+}
+
+.weui-cells:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #e5e5e5;
+    color: #e5e5e5;
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform: scaleY(0.5);  /*保证高度加边框只有1像素*/
+    z-index: 2;
+}
+.weui-cells:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #e5e5e5;
+    color: #e5e5e5;
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    z-index: 2;
+}
+.weui-cell {
+    padding: 10px 15px;
+    position: relative;
+    display: -webkit-box;  /*1.0版本的写法*/
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center; /*1.0版本写法*/
+    -webkit-align-items: center;
+    align-items: center;
+}
+.weui-cell + .weui-cell:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #e5e5e5;
+    color: #e5e5e5;
+    z-index: 2;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    transform: scaleY(0.5);
+    -webkit-trnsform: scaleY(0.5);
+}
+.weui-cell__bd {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+/* 自己想的是给label设置宽度（但发现无效），label是行内元素，设置宽度是无用的 */
+.weui-label {
+    display: block;
+    width: 105px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.weui-input {
+    -webkit-appearance: none;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    font-size: inherit;
+    color: inherit;  /*继承父元素的样式*/
+    height: 1.47058824em;
+    line-height: 1.47058824em;
+}
+.weui-cell__ft {
+    text-align: right;
+    color: #808080;
+}
+/* 没了 ，但是功能还在 */
+.weui-check {
+    position: absolute;
+    left: -9999em;
+}
+/* 只要类名中包括weui-icon-的都选中 */
+[class^="weui-icon-"], [class*=" weui-icon-"] {
+    display: inline-block;
+    vertical-align: middle;
+    font: 14px/1 "weui";
+    text-rendering: auto;
+    /* 抗锯齿 */
+    -webkit-font-smoothing: antialiased;
+}
+[class^="weui-icon-"]:before, [class*=" weui-icon-"]:before {
+    display: inline-block;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+/* :before将会在内容之前“添加”一个元素而:after将会在内容后“添加”一个元素。在它们之中添加内容我们可以使用content属性。 */
+.weui-cells_radio .weui-check:checked +
+.weui-icon-checked:before {
+    display: block;
+    content: '\EA08';
+    color: #09BB07;
+    font-size: 16px;
+}
+.weui-btn-area {
+    margin: 1.17647059em 15px 0.3em;
+}

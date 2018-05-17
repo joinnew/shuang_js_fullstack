@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./common.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!-- 使用自定义字体显示图标是一项常用的技能
+    iconfont alifont 
+    网页中会使用一些小图标， 首页， 我的， 订单， 支付等。
+    使用图片？ tabbar 10-20个图标 如果使用png图片 http的下载数太多
+    解决方案：1 雪碧图 sprite 把多张图拼成一张图 通过使用 background-position 来取图
+             2 mui-icon 将这些小图标放到自定义字体库（文件）里。
+            图标字体库由于使用base64,将很多的图标集中到字体中来显示，省去了很多大小，也只有一个http请求
+    base64 chrome推出的文件格式，编码格式 经常用来表示图片或文件，体积更小
+    前端性能优化，使用自定义字体库，base64图片 -->
+
+    <!-- 要使用自定义字符，大致步骤是：
+        自己造一个字体文件，把e000所对应的字符形状画上新浪的icon，保存为常用字体文件格式。
+        在css中使用font-face引用这个字体文件，任意命名（不和已有的重复，比如叫myfonticon）
+        需要显示图标的地方定义font-family为myfonticon，content属性（伪类）设为"\e000"。 
+        \e000就是对应矢量图标的字符 用content的方法更方便修改与调用-->
+    <div id="footer">
+        <div class="footer-wrapper">
+            <span class="logo">
+                <i class="mui-icon logo"></i>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

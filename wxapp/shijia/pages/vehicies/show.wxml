@@ -1,0 +1,20 @@
+<view class="section">
+    <view class="cover">
+        <image mode="aspectFill"/>
+        <view class="content">
+            <view class="header">
+                <view class="sub_header"></view>
+            </view>
+            <view class="meta"></view>
+        </view>
+    </view>
+    <view class="spec">
+        <view class="item">
+            <view class="header"></view>
+            <view class="value"></view>
+        </view>
+    </view>
+    <view class="action"></view>
+    <swiper class="section story white"></swiper>
+    <swiper class="section story"></swiper>
+</view>

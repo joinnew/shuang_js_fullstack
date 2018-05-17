@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="titleBar">
+    <div class="status">
+        <!-- wxml 模板 {{数据(默认是在data中,修改是在setData中,若没有data中的默认,不会出错 但是没有默认的选中按钮状态)}} 数据绑定
+        动态的, 可编译 活
+        data 是活的 setData
+        只要状态一变, 界面立即改变-->
+      <text class="{{status=='1'?'active':''}}" data-status="1" bindtap="showStatus">全部</text>
+      <!-- data-是自己设置的，后面命名可随意，事件e中的currentTarget中的dataset会包括这些值{new:"a"}/{status:"1"} -->
+      <text class="{{status=='2'?'active':''}}" data-status="2" bindtap="showStatus">未完成</text>
+      <text class="{{status=='3'?'active':''}}" data-status="3" bindtap="showStatus">已完成</text>
+    </div>
+    <div class="add">
+        <button class="mini-btn" size="mini" type="warn" bindtap="addTodoShow">添加</button>
+    </div>
+  </view>
+  <!-- 在垂直方向上滑动scroll-y -->
+  <scroll-view scroll-y class="lists">
+      <!-- wx:for 小程序中的指令 设置一个key值（0，1，2....）-->
+    <view class="item" wx:for="{{lists}}" wx:key="index">
+        <div class="content">
+            <!-- icon组件 -->
+            <icon class="icon-small" size="23" data-item="{{index}}" bindtap="changeTodo" type="{{item.status === '1' ? 'success':'circle' }}"></icon>
+            <text class="title">{{item.title}}</text> <!--获取到的数组里的对象名，默认为item,也可以随意取-->
+            <text class="time">{{item.date}}</text>
+        </div>
+    </view>
+  </scroll-view>
+  <view class="addForm {{addShow ? 'hide':''}}">
+      <!-- 不同的地方,我把addForm加入到了判断的里面去了,因为它们都是class中的值,但实际是{{}}也可以与其他值并存 
+    这里是boolean值,而不是字符串'false' 所以它们总不会相同的 对于boolean直接判断即可-->
+      <view class="addForm-div">
+          <input type="text" placeholder="请输入任务" class="weui-input" bindinput="setInput" value="{{addText}}"/>
+          <!-- 通过value值的设定 只要输入了就会触发了bindinput事件-->
+          <view class="addForm-btn">
+              <button type="warn" size="mini" bindtap="addTodo" class="weui-btn mini-btn">确定添加</button>
+              <button type="default" size="mini" bindtap="addTodoHide" class="weui-btn mini-btn">取消</button>              
+          </view>
+      </view>
+  </view>
+</view>

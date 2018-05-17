@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./base.css">
+    <link rel="stylesheet" href="./weui_cell.css">
+    <link rel="stylesheet" href="./weui_btn.css">
+    <link rel="stylesheet" href="./weui_agree.css">
+</head>
+
+<body>
+    <div class="weui-cells__title">登录</div>
+    <div class="weui-cells weui-cells_form weui-cell_radio">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">用户名</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input type="text" class="weui-input" placeholder="请输入用户名" id="nameInput"/>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">密码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input type="password" class="weui-input" placeholder="请输入密码" id="passwordInput" minlength="6" maxlength="16"/>
+            </div>
+            <div class="weui-cell__ft">
+                <input type="radio" class="weui-check" checked="true">
+                <span class="weui-icon-checked">vfd </span>
+            </div>
+        </div>
+    </div>
+    <label for="weuiAgree" class="weui-agree">
+        <input type="checkbox" id="weuiAgree" class="weui-agree__checkbox"/>
+        <span class="weui-agree__text">
+            阅读并同意
+            <a href="#">《相关条款》</a>
+        </span>
+    </label>
+    <div class="weui-btn-area">
+        <a href="javascript:;" id="loginBtn" class="weui-btn weui-btn_primary">提交</a>
+    </div>
+    <script>
+        window.onload = function() {
+            const loginBtn = document.getElementById('loginBtn');
+            // 登录流程，对象化
+            const loginForm = {
+                // 把其封装为对象的属性
+                nameInput: document.getElementById('nameInput'),
+                passwordInput: document.getElementById('passwordInput'),
+                submit: function() {
+                    if (!this.checkUsername()){
+                        return false;
+                    }
+                    if (!this.checkPassword()) {
+                        return false;
+                    }
+                },
+                checkUsername: function() {
+                    const strUsername = this.nameInput.value.trim();
+                    if (!strUsername) {
+                        this.nameInput.focus();
+                        return false;
+                    }
+                    return true;
+                },
+                checkPassword: function() {
+                    const strPassword = this.passwordInput.value.trim();
+                    if (!strPassword) {
+                        // 一开始认为不应该聚焦，但是先检验用户名，在检验密码，能到检验密码这一步，说明用户名已填，所以需要把密码聚焦
+                        this.passwordInput.focus();
+                        return false;
+                    }
+                    const strLen = strPassword.length;
+                    if (strLen < 6 || strLen > 16) {
+                        alert('密码长度需大于6位，小于16位');
+                        return false;
+                    }
+                    return true;
+                },
+                reset: function() {
+
+                }
+            }
+            loginBtn.addEventListener('click', function(event) {
+                if (loginForm.submit()) {
+                    loginBtn.reset();
+                    alert('表单提交成功!');
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -26,18 +26,18 @@ EditInPlace.prototype = {
         this.parentElement.appendChild(this.containerElement);
 
         // 显示静态文字
+        // 按钮
         // js 动态性
         this.staticElement = document.createElement('span');
         this.staticElement.innerHTML = this.value;
         this.containerElement.appendChild(this.staticElement);
 
-        // 按钮
+
         // 对象的内部 this 指向对象 对象在原型链上 有方法和属性.
         this.fieldElement = document.createElement('input');
         this.fieldElement.type = 'text';
         this.fieldElement.value = this.value;
         this.containerElement.appendChild(this.fieldElement);
-        this.parentElement.appendChild(this.containerElement);
         // 文字和输入框,只能显示一个
         this.converToText();
     },

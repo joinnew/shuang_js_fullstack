@@ -1,0 +1,20 @@
+<swiper class="section hero white" indicator-dots="{{true}}">
+  <block wx:for="{{slides}}" wx:key="id">
+    <!-- wx:key -->
+    <swiper-item>
+      <image src="{{item.image}}" mode="aspectFill"/>
+      <!-- 循环里的每一项名字默认为item -->
+      <view class="content centered">
+        <view class="sub-header">{{item.sub_header}}</view>
+        <view class="header">{{item.header}}</view>
+        <view class="description">{{item.description}}</view>
+        <!-- 技巧：一个页面存在标题和副标题时，在存在第三个内容，取名为description -->
+        <view class="action">
+          <button class="button" bindtap="textDrive">预约试驾</button>
+          <button class="button primary" bindtap="readMore" data-id="{{item.id}}">了解更多</button>
+          <!-- 两个按钮放在一起，一般最好用不同颜色显示，以区分,多一个样式 -->
+        </view>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>

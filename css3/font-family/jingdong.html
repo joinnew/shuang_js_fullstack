@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./iconfont.css">
+    <style>
+        html {
+            background-color: #dedede;
+        }
+        .w {
+            position: relative;
+            z-index: 11;
+            height: 140px;
+            width: 990px;
+            margin: auto;
+        }
+        .search-m {
+            position: absolute;
+            z-index: 1;
+            height: 60px;
+        }
+        .form {
+            position: absolute;
+            left: 270px;
+            width: 400px;
+            top: 25px;
+            height: 35px;
+        }
+
+        .form .text {
+            width: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            outline: none;
+            padding: 4px 44px 4px 4px;
+            height: 25px;
+            border: 1px solid transparent;
+            line-height: 25px;
+            font-size: 14px;
+            color: #989898;
+        }
+        button, input {
+            font-family: Microsoft YaHei,tahoma,arial,Hiragino Sans GB,\\5b8b\4f53,sans-serif;
+        }
+
+        .photo-search-btn {
+            position: absolute;
+            right: 65px;
+            top: 10px;
+            width: 19px;
+            height: 15px;
+            overflow: hidden;
+        }
+        .form .button {
+            position: absolute;
+            top: 0;
+            outline: none;
+            border-radius: 0;
+            right: 0;
+            width: 50px;
+            height: 35px;
+            line-height: 35px;
+            border: none;
+            background-color: #f10215;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        #settleup {
+            position: absolute;
+            right: 99px;
+            top: 25px;
+            z-index: 21;
+        } 
+        .w #settleup .cw-icon {
+            width: 188px;
+            height: 33px;
+            background-color: #ffffff;
+            text-align: center;
+            line-height: 33px;
+        }
+        .cw-icon {
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            float: left;
+            border: 1px solid #e3e4e5;
+            font-size: 14px;
+        }
+        .ci-count {
+            position: absolute;
+            top: 5px;
+            left: 140px;
+            right: auto;
+            display: inline-block;
+            padding: 1px;
+            font-size: 12px;
+            line-height: 12px;
+            color: #ffffff;
+            background-color: #f10215;
+            border-radius: 7px;
+            min-width: 12px;
+            text-align: center;
+        }
+        i {
+            font-style: normal;
+        }
+        a {
+            color: #f10214;
+            text-decoration: none;
+        }
+        .icon-color {
+            color: red;
+        }
+        .icon-size {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w">
+        <div id="search">
+            <div class="search-m">
+                <div class="form">
+                    <input type="text" class="text">
+                    <span class="photo-search-btn">
+                        <i class="iconfont icon-photo"></i>
+                    </span>
+                    <button class="button">
+                        <i class="iconfont icon-search icon-size"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="settleup">
+            <div class="cw-icon">
+                <i class="ci-count">0</i>
+                <i class="iconfont icon-gouwuchekong icon-color"></i>
+                <a href="#" target="_blank" >我的购物车</a>
+            </div>
+        </div>
+        <div id="hotwords"></div>
+    </div>
+</body>
+
+</html>

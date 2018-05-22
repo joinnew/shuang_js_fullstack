@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise es6 异步当家花旦</title>
+</head>
+<body>
+    <script>
+        // console.log('开始了');
+        // fetch('https://wesbos.com/wp-json/wp/v2/posts')
+        //     .then(function(res) {
+        //         console.log('A');
+        //     });
+        // fetch('http://data.ratp.fr/api/datasets/1.0/search/?q=paris')
+        //     .then(function(res) {
+        //         console.log('B');
+        //     });
+            // 等到异步A和异步B发生之后，再执行
+            // console.log('C');
+            // 顺序执行？ JS执行顺序不再同步
+
+            // 异步 所以JS的执行顺序得不到保证， A -> B -> C
+        // 许下诺言， 先好好写代码， 找到工作之后一定会来找你。
+        // 接受回调函数
+
+        // 将要发生很久的事情，交给promise吧。
+        // 解决 resolve(表示的是实现了，如果没有这个方法，将永远等待下去) ,表示这一阶段顺利完成
+        //  拒绝 reject(也是起到事件结束的状态，但是是出现异常了) 也就是这一阶段没有完成，会影响下一阶段。保证某件事是一定先发生的
+
+        // 复杂任务时的调度
+        // const p = new Promise((resolve, reject) => {
+        //     console.log('A');            
+        //     setTimeout(() => {
+        //         // resolve('A is over');
+        //         // 数据存储 mysql, 读取文件， 定时任务
+        //         reject('失败的原因');
+        //     },2000)
+        // });
+        // 在这里的事情完成后，再执行then，强制代码执行顺序，同步执行
+        // .then前面事情完成在做这件事
+        // p.then((res) => {
+        //     console.log(res);
+        // }).catch(e => {
+        //     console.log('不好意思');
+        // })
+        
+        // .then()
+        // B ?....
+        // A 很长时间 => C(A)
+
+        // fetch 执行后返回的是一个promise
+        // 两件异步要做的事情，发生不确定的时间 PROMISE
+        const postsPromise = fetch('https://wesbos.com/wp-json/wp/v2/posts');
+        const streetCarsPromise = fetch('http://data.ratp.fr/api/datasets/1.0/search/?q=paris');
+
+        // js 不会为异步停留
+        // 等最晚的那个执行完，A，B 结果， 在执行C
+        Promise
+            .all([postsPromise,streetCarsPromise])
+            .then(responses => {
+                // console.log(responses);
+                return Promise.all(responses.map(
+                    res => res.json()
+                ))
+            })
+    </script>
+</body>
+</html>

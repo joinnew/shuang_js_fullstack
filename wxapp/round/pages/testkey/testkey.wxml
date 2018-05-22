@@ -1,0 +1,3 @@
+<view wx:for="{{testList}}" wx:key="{{item.id}}">
+  <view>{{item.text}}</view>
+</view>

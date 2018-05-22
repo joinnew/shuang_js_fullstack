@@ -12,16 +12,16 @@ dogs.set('Hugo', 12);
 // const dog = new Map(obj);
 // console.log(dog);
 
-dogs.forEach((val, key) => console.log(val, key));
+dogs.forEach(dog => console.log(dog));
 // 输出形式是 3 'Snickers'
 
 // 可以迭代的都可以使用for of
 // 每一项都是一个数组
-for ( const [key, val] of dogs) {
-    console.log(key, val);
+for ( dog of dogs) {
+    console.log(dog);
 }
 // 认为最后输出的dog应该是最后一个值，但是const挟持了一个块级作用域，外部访问不到dog的
-// console.log(dog);
+console.log(dog);
 
 let a = 1;
 let b = 1;

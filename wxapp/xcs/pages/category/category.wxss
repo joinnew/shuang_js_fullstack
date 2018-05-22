@@ -1,0 +1,76 @@
+page, .main{
+    height: 100%;
+}
+.category-left {
+    float: left;
+    width: 150rpx;
+    height: 100%;
+    border-right: 1px solid #ddd;   /*宽度是刚好分割的(共750rpx)，当添加了1像素的边框，那么另一边宽度就不够，就会往下掉，最好添加box-sizing:border-box*/
+    box-sizing: border-box;
+}
+.category-left .cate-list {
+    height: 90rpx;
+    line-height: 90rpx;
+    text-align: center;
+    border-left: 3px solid #ffffff;
+}
+.category-left .cate-list.on {
+    border-color: #ab9560;
+    color: #ab9560;
+}
+.category-right {
+    float: right;
+    width: 600rpx;
+    height: 100%;
+    overflow: hidden;
+}
+.cate-box {
+    padding: 40rpx;
+    box-sizing: border-box;
+    height: 100%;
+    /* 让一个分类的内容独占一屏 */
+}
+.cate-box .cate-banner image {
+    display: block;
+    width: 100%;
+    height: 190rpx;
+    border: 1px solid red;
+    box-sizing: border-box;
+}
+.cate-title {
+    position: relative;
+    height: 30rpx;
+    padding: 30rpx 0 55rpx;
+    text-align: center;
+    color: #ab956d;
+    font-size: 28rpx;
+}
+.cate-title:before {
+    position: absolute;
+    left: 130rpx;
+    top: 43rpx;
+    content: '';
+    width: 70rpx;
+    height: 4rpx;
+    background: #ab956d;
+}
+.product-list {
+    display: inline-block;
+    width: 160rpx;
+    height: 160rpx;
+    text-align: center;
+    margin: 0 20rpx 20rpx 0;
+    font-size: 24rpx;
+}
+
+.product-list image {
+    width: 80rpx;
+    height: 80rpx;
+    margin-bottom: 20rpx;
+    border: 1px solid red;
+    box-sizing: border-box;
+}
+/* 3n表示3的倍数 */
+.product-list:nth-child(3n) {
+    margin-right: 0;
+}

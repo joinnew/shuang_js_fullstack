@@ -1,0 +1,7 @@
+<template name="tabbar">
+    <view class="tabbar">
+        <view class="home"></view>
+        <view class="publish"></view>
+        <view class="myPage"></view>
+    </view>
+</template>

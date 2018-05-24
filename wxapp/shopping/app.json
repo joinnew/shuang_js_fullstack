@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/detail/detail",
+    "pages/savemessage/save",
     "pages/cart/cart",
     "pages/index/index",
     "pages/logs/logs",

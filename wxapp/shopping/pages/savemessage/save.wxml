@@ -1,0 +1,8 @@
+<view class="main">
+    <view class="inputMessage">
+        <input type="text" class="inputMessage-name" value="{{inputName}}" placeholder="姓名" bindinput="inputText"/>
+        <input type="text" class="inputMessage-tel" value="{{inputTel}}" placeholder="电话号码" bindinput="inputText"/>
+        <input type="text" class="inputMessage-address" value="{{inputAddress}}" placeholder="详细地址" bindinput="inputText"/>
+    </view>
+    <button class="saveMessage" size="default" type="warm" disabled="{{disabled}}" bindtap="saveMessage">保存</button>
+</view>

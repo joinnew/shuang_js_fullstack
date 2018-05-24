@@ -1,1 +1,8 @@
-/* pages/user/user.wxss */
+.header {
+    background: #ab966d;
+    position: relative;
+    line-height: 160rpx;
+    height: 160rpx;
+    padding: 30rpx 30rpx 
+
+}

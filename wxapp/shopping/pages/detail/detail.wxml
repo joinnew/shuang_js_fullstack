@@ -1,0 +1,55 @@
+<!-- <view class="main">
+    <view class="main-hd">
+        <view class="pic">
+            <image src="" />
+            <naigater></naigater>
+        </view>
+        <view class="main-hd__addSort">
+            <text class="num">数量1</text>
+            <text>+</text>
+            <navigater>加入购物车</navigater>
+        </view>
+        <view class="main-hd__message">
+            <text class="main-hd__store">有货</text>
+            <text class="main-hd__name">新鲜梨花带雨</text>
+            <text class="main-hd__price">￥0.01</text>
+        </view>
+    </view>
+    <view class="main-bd">
+        <text class="main-bd__desc">商品详情</text>
+        <text class="main-bd__can">产品参数</text>
+        <text class="main-bd__server">售后保障</text>
+    </view>
+</view> -->
+<!-- 命名上，可以使用具体的 -->
+<view class="main">
+    <view class="goods-box">
+        <image class="goods-thumb" src="{{goods.image}}"/>
+        <view class="goods-operation">
+            <text class="goods-operation-num">数量{{num}}</text>
+            <text class="goods-operation-add" bindtap="addCount">+</text>
+            <text class="goods-to-cart" bindtap="addToCart">加入购物车</text>
+            <image class="goods-cart-img" src="/image/cart1.png"/>
+        </view>
+        <image class="to-carts-icon" wx:if="{{show}}" src="/image/cart1.png"/>
+        <view class="goods-stock">{{goods.stock}}</view>
+        <view class="goods-title">{{goods.title}}</view>
+        <view class="goods-price">￥{{goods.price}}</view>
+        <navigator url="../cart/cart" open-type="switchTab">
+            <view class="carts-icon {{scaleCart?'on':''}}">
+                <image src="/image/cart2.png"/>
+                <text class="carts-icon-num" wx:if="{{hasCarts}}">{{totalNum}}</text>
+            </view>
+        </navigator>
+    </view>
+    <view class="good-tab-box">
+        <view class="goods-tab-nav {{showIndex==0?'on':''}}" data-index="0" bindtap="showSomething">商品详情</view>
+        <view class="goods-tab-nav {{showIndex==1?'on':''}}" data-index="1" bindtap="showSomething">产品参数</view>
+        <view class="goods-tab-nav {{showIndex==2?'on':''}}" data-index="2" bindtap="showSomething">售后保障</view>
+        <view class="goods-content">
+            <view wx:if="{{showIndex==0}}">{{goods.detail}}</view>
+            <view wx:if="{{showIndex==1}}">{{goods.parameter}}</view>
+            <view wx:if="{{showIndex==2}}">{{goods.service}}</view>           
+        </view>
+    </view>
+</view>

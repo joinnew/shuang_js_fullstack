@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        // 在所有css之前，先来决定html fz应该是多少
+        (function(w) {
+            // 找到html元素 ？ 设置其fz值 window是全局
+            let s = w.document;
+            // 先找到文档树 document
+            let html = s.documentElement;
+            // html 是所有的结点
+            let colWidth = html.clientWidth/10;
+            // clientWidth 窗口宽度 innerWidth
+            html.style.fontSize = colWidth + 'px';
+            console.log(html.style.fontSize);
+        })(window)
+    </script>
+    <style>
+        /* 屏幕10rem,将设备宽度与rem相关联起来 也就是要把fz（动态生成）设为设备宽度的1/10*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: rgb(44, 78, 87);
+        }
+        html, body {
+            height: 100%;       
+        }
+        .page {
+            overflow: hidden;
+        }
+        .page .page-hd {
+           margin-top: 2.958333rem; 
+           text-align: center;
+           font-size: 0.6666rem;
+        }
+        .page .page-bd {
+            width: 7.8611rem;
+            margin: 2.638888rem auto 2.555555rem;
+        }
+        .page-bd .page-bd__a{
+            display: inline-block;
+            width: 1.683333rem;
+            height: 1.683333rem;
+            line-height: 1.683333rem;
+            text-align: center;
+            border: 0.059444rem solid rgb(151, 165, 163);
+            border-radius: 50%;
+            margin-right: 1rem;
+            margin-bottom: 0.777777rem;
+            font-size: 0.666rem;
+            color: #fff;
+        }
+        .page-bd .page-bd__a:active {
+            border-color: blue;
+        }
+        .page-bd .page-bd__a.last {
+            margin-left: 3.013333rem;
+        }
+        .page-bd .page-bd__a:nth-child(3n) {
+            margin-right: 0;
+        }
+        .page .page-ft {
+            position: fixed;
+            left: 0.222222rem;
+            bottom: 0.277777rem;
+            font-size: 0.416666rem;
+        }
+        .page .page-ft .page-ft__cancel {
+            margin-left: 7.012222rem;
+        }
+        .page .page-ft a {
+            color: rgb(151, 165, 163);
+        }
+        a {
+            text-decoration: none;
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="page-hd">
+            <header>输入密码</header>
+        </div>
+        <div class="page-bd">
+            <a class="page-bd__a" href="#">1</a>
+            <a class="page-bd__a" href="#">2</a>
+            <a class="page-bd__a" href="#">3</a>
+            <a class="page-bd__a" href="#">4</a>
+            <a class="page-bd__a" href="#">5</a>
+            <a class="page-bd__a" href="#">6</a>
+            <a class="page-bd__a" href="#">7</a>
+            <a class="page-bd__a" href="#">8</a>
+            <a class="page-bd__a" href="#">9</a>
+            <a class="page-bd__a last" href="#">0</a>            
+        </div>
+        <div class="page-ft">
+            <a href="#" class="page-ft__call" href="#">紧急呼叫</a>
+            <a href="#" class="page-ft__cancel" href="#">取消</a>
+        </div>
+    </div>
+</body>
+</html>

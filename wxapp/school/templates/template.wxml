@@ -1,0 +1,7 @@
+<template name="dormInfo">
+    <view class="dorm-info weui-flex weui-select">
+        <!-- 使用展开运算符，也就是现在第一层就是name数据 -->
+        <text class="content">{{name}}</text>
+        <text class="tip {{tip.color}}">{{tip.content}}</text>
+    </view>
+</template>

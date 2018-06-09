@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 红色4库存 -->
+    <!-- 蓝色6库存 -->
+    <div class="container">
+        <div class="input-message">
+            选择颜色：
+            <select name="color" id="colorSelect">
+                <option value="red">红色</option>
+                <option value="blue">蓝色</option>
+            </select>
+            输入购买数量：
+            <input type="text" id="inputNum">
+        </div>
+        <div class="show-message">
+            <p>您选择了颜色：</p>
+            <p id="color">red</p>
+            <p>您选择了数量：</p>
+            <p id="number"></p>
+        </div>
+        <input type="button" id="buttonShow" value="加入购物车">
+    </div>
+    <script>
+        const colorSelect = document.querySelector('#colorSelect');
+        const inputNum = document.querySelector('#inputNum');
+
+        function getInputMessage() {
+            colorSelect.addEventListener('change', function () {
+                showResult();
+            })
+            inputNum.addEventListener('input', function () {
+                showResult();
+            })
+
+        }
+        window.onload = getInputMessage();
+        function showResult() {
+            const showColor = document.querySelector('#color');
+            const showNumber = document.querySelector('#number');
+            const buttonShow = document.querySelector('#buttonShow');
+            const color = colorSelect.value||'red';
+            const num = inputNum.value;
+            showColor.innerHTML = color;
+            showNumber.innerHTML = num;
+            // console.log(num);
+            // console.log(color);            
+            if ((color == 'red' && num >= 4)||(color == 'blue' && num >= 6)) {
+                    buttonShow.value="库存不足";
+                    buttonShow.disabled = true;
+                }
+            if(num == '') buttonShow.value="请输入购买数量";
+            if (num <= 0) buttonShow.value="请输入正确的购买数量";
+            // else {
+            //     buttonShow.value="加入购物车";
+            //     buttonShow.disabled = false;
+            //     }
+            // .addEventListener('click', function () {
+
+            // })
+
+        }
+
+    </script>
+</body>
+
+</html>

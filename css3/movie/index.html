@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>电影</title>
+    <style>
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        body {
+            color: #494949;
+            background: #fff;
+            font-size: 13px;
+            font-family: -aaple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #app {
+            /* 一般navigationBar是44px */
+            /* 给navigationBar fixed 让位置 */
+            padding-top: 47px;
+            padding-left: 2%;
+            padding-right: 2%;
+            max-width: 650px;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        #app h1 {
+            font-size: 24px;
+            font-weight: normal;
+            box-sizing: border-box;
+            max-width: 660px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 6px;
+            padding-left: 4%;
+        }
+
+        .grid {
+            padding: 20px 0;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 660px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* 自建九宫格最方便的写法 */
+
+        .grid .item {
+            float: left;
+            box-sizing: border-box;
+            width: 33.33333%;
+            padding-left: 4%;
+            padding-right: 4%;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        a,
+        img {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #list .item {
+            text-decoration: none;
+            color: #9b9b9b;
+        }
+
+        .grid .item .cover {
+            /* 图片要做延迟加载 */
+            min-height: 87px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .grid .ratio1_1,
+        .grid .ratio3_4 {
+            position: relative;
+        }
+
+        /* 移动端高度无法定的解决方案，相对父元素的宽度，来说做100% */
+
+        .grid .ratio3_4:before {
+            content: "";
+            display: block;
+            padding-top: 143%;
+            /* background: red; */
+        }
+
+        .grid .item .img-show {
+            /* display: none; */
+            /* 流不会受影响，图片下不下载，都不会影响页面布局 */
+            position: absolute;
+            left: -100%;
+            right: -100%;
+            top: -100%;
+            bottom: -100%;
+            margin: auto;
+            min-width: 100%;
+            min-height: 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            width: 100%;
+        }
+
+        /* 保险 标题多行 */
+
+        .grid .item .info {
+            height: 45px;
+            overflow: hidden;
+        }
+
+        .grid .item h3 {
+            font-size: 13px;
+            font-weight: normal;
+            padding: 5px 0 0;
+            color: #494949;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 1;
+            /*只会占据一行，超过则以...显示*/
+        }
+
+        #list p {
+            margin: 0;
+        }
+
+        .grid .item .rank {
+            height: 16px;
+            font-size: 12px;
+            padding-top: 3px;
+            text-align: center;
+        }
+
+        /* 评分是网站的基础组件 */
+
+        .rating-stars {
+            /* span 行内 backgroung-image inline */
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* 公共样式  */
+
+        .rating-stars .rating-star {
+            display: inline-block;
+            margin-right: 1px;
+            background-color: transparent;
+            background-repeat: no-repeat;
+        }
+
+        /* 区别样式 全星 半星 无星 */
+
+        /* 提供了多种大小 */
+
+        .rating-star-small-full,
+        .rating-star-small-half,
+        .rating-star-small-gray {
+            width: 10px;
+            height: 10px;
+            background-size: 10px 10px;
+        }
+
+        .rating-star-small-full {
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAfhJREFUOBGlVD1LHFEUPXfWrzGJO2uhaIQ0iljESgKSpAjBwpXVKikEl6TzD6TwJ4gWaQMBS8WQgCRZ61QpglUgRbQUbMR1XfwodvbmvE1mdt/ssDPBC493733nnrkf7w2QQrSU29D9wY8poJAkkG6hD8O5E+IGgJsHkr8+7hTjdDpsnA0PLkHE4yK2r5iETyYUfdUkkRa96W3VOhLqXv8oFHNhgGCC/Xwc2jFKR0J0966w1IwVp/LasiNGOBTdxV24bhbqenCQRUY9qLzl2CasGEUVdbyA1M5R1wrq/gUqVxUp4tLghCX85D7VlonFksJQ9Un3w5S8c2sy8z3TGtGDRsla8op0vKe3O0UuMRBVDm9N8uX1Zg/3s8+hmU/sGS/wf8kN0UWZP/tgokJCY+jX3ENmWqJ3zNiJonoKXxalcPY9wFqExqmf3fvIuL+SM2WZNX9SCheHAZnZ2++h9FyxufdaQfG6CBznTvQshtDhSyA4jQieRmExhO2gaFBoi5OK8EkYECiqX9jdd1wauP7tbVgrw8a/TzETBpkp1nWZ96sg8+VV8j0j6VF4Dozo3sB4ix0ZypD3iO3r+QvQbfi1KVkobwcBkj//hmp5msSbXHxqlC67bCtDDr2fN/43wYvMaFkK1dOALNjlJa6Z8RuIP0vfAZfVhj/iqoy46fpKwgAAAABJRU5ErkJggg==);
+        }
+
+        .rating-star-small-gray {
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAeRJREFUOBGtlDsvBFEUx3d2djfiMbTsQ0NEwTaiQSGiRKWREDofgMJHEAqdSPSE0BC9SiEqWQWSzT4SzSbrsR7Fzo7fEXfNg9klbjI5j/s/vzn3MRMI1DFyudxaPp8/qEMa0GqJ0ul0QzgcvtM0zbAsqzMWi+X9aoJ+kzIXiUSmgLXhinZOcn6jJpDieRvA7tvSX64vMJvNdiAdV3I67c5kMkMq/s76AgHMUqTbC0Oh0II9dvvVQ0mlUs2GYbRWKpU2ij4swA3pylX0ZJrmNPn7crn8oOv6Y7FYfEgmk8+i07gOl0z24js6cUHqCU1uwbksefcfYPJCHeDFx5LpUq7DNp2GZeYPw2KrVuLx+Gp1D4GOATwEZvwGSFdv6Oe48PtSVwVKwCfWB/SEJyZxHaMAcBLYmdI6gJIEGg0Gg1e4tTqVZfawzBsFE+u5h4heyLfYRT/4LERrcs95gNwr+RI8nbsLJWa5I+68B8hbPSJ3kYq/03qAvHVYFShL7phni9hSuU/r0TqA8u9DOGArKvCZzXCKEzyL7O8o4Fs1T4ftHGKXisU6gOzfIKLIp2CnVCr1JhKJHVXAiZ4C7Ae8Ts6UPDfCsUUhJRYLrJGCa+xSNBo9ss8pH+gr/jK/tj0a2ETv2IZ35FSkS7HbzakAAAAASUVORK5CYII=);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>影院热映</h1>
+        <!-- 网站 grid 布局方式 -->
+        <section id="list" class="grid">
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="movie.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="movie.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2520331478.jpg" src="" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2520331478.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2520331478.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2520331478.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2520331478.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2520331478.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="item">
+                <div class="cover">
+                    <div class="wp ratio3_4">
+                        <img data-src="https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2520331478.jpg" alt="" class="img-show">
+                    </div>
+                    <div class="info">
+                        <h3>超时空同居</h3>
+                        <p class="rank">
+                            <span class="rating-stars">
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full"></span>
+                                <span class="rating-star rating-star-small-full rating-star-small-gray"></span>
+                            </span>
+                            <span class="rating-grade">7.2</span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </section>
+    </div>
+    <script>
+        // NodeList 类数组 有length,可以循环，但没有forEach()方法
+        // 一切可枚举的对象转变成数组
+        function showMessage() {
+            const imgs = Array.from(document.querySelectorAll('.img-show'));
+            imgs.forEach(function (img) {
+                // console.log(img)
+                let src = img.getAttribute('data-src');
+                // console.log(img.dataset.src); IE9以上才兼容
+                var oImg = document.createElement('img');
+                oImg.style.display = 'none';
+                oImg.src = src;
+                oImg.onload = function () {
+                    // console.log('loaded');
+                    img.src = src;
+                    setTimeout(() => {
+                        img.style.opacity = 1;
+                    }, 2000)
+                }
+                document.body.appendChild(oImg);
+            })
+        }
+
+        // 要知道文档高度（真个页面的高度），可视窗口的高度，看到的浏览器可视屏幕的高度，滚动条滚动高度（滚动条下滑过的高度）
+        // 当文档高度 = 可视窗口高度 + 滚动条高度时，滚动条正好到底
+
+        // 文档高度
+        function getDocumentTop() {
+            var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+            if (document.body) {
+                bodyScrollTop = document.body.scrollTop;
+            }
+            if (document.documentElement) {
+                documentScrollTop = document.documentElement.scrollTop;
+            }
+            scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+            return scrollTop;
+        }
+
+        // 可视窗口高度
+        function getWindowHeight() {
+            var windowHelight = 0;
+            windowHelight = document.body.clientHeight;
+            return windowHelight;
+        }
+
+        // 滚动条高度
+        function getScrollHeight() {
+            var scrollHeight = 0, bodyScrollHeight = 0, documetnScrollHeight = 0;
+            // console.log(document.body);
+            if (document.body) {
+                bodyScrollHeight = document.body.scrollHeight;
+                // console.log(bodyScrollHeight);
+            }
+            if (document.documentElement) {
+                documentScrollHeight = document.documentElement.scrollHeight;
+                // console.log(documetnScrollHeight);
+            }
+            scrollHeight = ((bodyScrollHeight - documentScrollHeight) > 0) ? bodyScrollHeight : documetnScrollHeight;
+            // console.log(scrollHeight);
+            return bodyScrollHeight;
+        }
+        // 监听滚动条的事件
+        const movies = [];
+        window.onload = function () {
+            showMessage();
+            ajax_function();
+        };
+        window.onscroll = function () {
+            // console.log(getScrollHeight());
+            if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+                ajax_function();
+            }
+        }
+
+        function ajax_function() {
+            const moviesInfo = "https://www.easy-mock.com/mock/5aded0f5c57e6f08ff165a6c/students/movies";
+            fetch(moviesInfo)
+                .then(blob => blob.json())
+                .then(data => {
+                    // console.log(data.data.movies);
+                    movies.push(...data.data.movies);
+                    // console.log(movies);
+                });
+
+            const html = movies.map(movie => {
+                var node = document.querySelector('.item').cloneNode(true);
+                var img = node.querySelector('.img-show');
+                img.setAttribute("data-src", movie.src);
+                img.setAttribute("src", "movie.jpg");
+                var title = node.querySelector('h3');
+                title.innerHTML = movie.title;
+                var stars = node.querySelector('.rating-grade');
+                // console.log(stars);
+                stars.innerHTML = movie.rating;
+                document.querySelector('.grid').appendChild(node);
+            })
+            showMessage();
+        }
+    </script>
+</body>
+
+</html>

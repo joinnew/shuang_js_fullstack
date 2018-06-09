@@ -1,11 +1,6 @@
 //index.js
 //获取应用实例
-
-// 引入util模块，require 是COMMONJS规范
-const util = require('../../utils/util.js')
-
 const app = getApp()
-const musicUrl = app.globalData.musicBasic;
 
 Page({
   data: {
@@ -47,18 +42,6 @@ Page({
         }
       })
     }
-    this.getList('down');
-    // util.$get('http://wesbos.com/wp-json/wp/v2/posts',{})
-    //   .then(res => {
-    //     console.log(res);
-    //   })
-      // const url = `${musicUrl}/api/channel/music/more`;
-      // util.$get(url,{
-      //   id: 0
-      // })
-      //   .then(res => {
-      //     console.log(res);
-      //   })
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -67,39 +50,5 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  },
-  onPullDownRefresh() {
-    console.log('pulldown');
-    this.getList('down');
-  },
-  getList(type) {
-    // id 是关键，加载新的一项时，上一页
-    type === 'down' ? this.setData({id: 0}): null;
-    util.$get(`${musicUrl}/api/channel/music/more`,{
-      id: this.data.id
-    })
-    .then(res => {
-      this.processData(type, res.data.data);m
-    })
-  },
-  processData(type, list) {
-    if (type === 'up') {
-        this.setData({
-          musicList: [
-            ...this.data.musicList,
-            ...list
-          ],
-          id: list[list.length-1].id
-        })
-        console.log(list[list.length-1].id);
-    }else if (type === 'down') {
-      this.setData({
-        musicList: list
-      })
-      wx.stopPullDownRefresh();
-    }
-  },
-  onReachBottom() {
-    this.getList('up');
   }
 })

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表单验证</title>
+    <script src="validator.js"></script>
+</head>
+<body>
+    <form action="http://xxx.com/register" method="post" id="registerForm">
+        <div class="field">
+            请输入用户名：
+            <input type="text" name="userName"/>
+        </div>
+        <div class="field">
+            请输入密码：
+            <input type="password" name="password"/>
+        </div>
+        <div class="field">
+            请输入手机号：
+            <input type="tel" name="phoneNumber"/>
+        </div>
+        <button>提交</button>
+    </form>
+    <script>
+        const registerForm = document.querySelector('#registerForm');
+        // 相当于form表单的key,调用方式[]/. 取值用.value
+        registerForm.onsubmit = function() {
+            // 在获取的时候，就进行去空格,trim()是后期引入的，存在兼容性问题IE67
+            // const userNameResult = strategies.isNonEmpty(registerForm.userName.value, '用户名不能为空');
+            // if (!userNameResult.status) {
+            //     alert(userNameResult.msg);
+            //     return false;
+            // }
+            // const passwordResult = strategies.isNonEmpty(registerForm.password.value, '用户名不能为空');
+            // if (!passwordResult.status) {
+            //     alert(passwordResult.msg);
+            //     return false;
+            // }
+            // const passwordLengthResult = strategies.minLength(registerForm.password.value, 6, '密码不得少于6位');
+            // if (!passwordLengthResult.status) {
+            //     alert(passwordLengthResult.msg);
+            //     return false;
+            // }
+            // const phoneNumberResult = strategies.isNonEmpty(registerForm.phoneNumber.value, '手机号不能为空');
+            // if (!phoneNumberResult.status) {
+            //     alert(phoneNumberResult.msg);
+            //     return false;
+            // }
+            // // **************重复调用？重新创建一个变量就好 --------还有更好的方式，一个字段带有多个验证
+            // ***************返回值是json时，不论是
+            // const regPhoneResult = strategies.isMobilePhone(registerForm.phoneNumber.value, '手机号码格式有误');
+            // if (!regPhoneResult.status) {
+            //     alert(regPhoneResult.msg);
+            //     return false;
+            // }
+            var errorMsg = validateFunc();
+            if (errorMsg) {
+                alert(errorMsg);
+                return false;
+            }
+            return true;
+        }
+        // 有字段存在多个验证效果：1 如果不符合要求就返回错误信息 
+        // 2 如果符合要求是继续往下走(会自行往下走，不需要专门写到else里面)
+        // 3 符合要求的话，那就可以判断该字段(在原判断返回的结果上赋值即可)是否符合另一个要求
+        
+        // 具体的表单验证 -> strategies 集合了表单的验证逻辑（抽象的去写验证） 
+            // 抽象 validateFunc 还包括具像的代码
+            // 比如：是什么元素(?)，什么规则（抽象strategies），做什么验证(key)， 
+        function validateFunc() {
+            // 验证对象
+            // 验证函数任务中，已经有了验证策略类，有很多的不确定的数量的表单元素及规则，要去验证，
+            // 中介者模式，门清，内存，颜色，品牌，交给中介者对象，轻松很多，
+            // 要一个验证对象 专业的 将要验证的元素交给它
+            // 验证的过程 抽象
+            // 要验证的元素给对象？
+            var validator = new Validator();
+            validator.add(registerForm.userName, 'isNonEmpty', '用户名不能为空');
+            validator.add(registerForm.password, 'minLength:6', '密码长度不得小于6位');
+            validator.add(registerForm.phoneNumber, 'isMobilePhone', '手机号码格式错误');
+            var errorMsg = validator.start();
+            return errorMsg;
+        }
+        // 将要验证的表单元素加进一个数组
+        // 开启--验证 strategies
+        function Validator() {
+            this.cache = [];
+        }
+
+        Validator.prototype = {
+            // rules 规则名（也可能存在规则参数）:6
+            add: function(dom, rules, errorMsg) {
+                var ary = rules.split(':'); //即使没有：也会把仅存的放到数组中去
+                this.cache.push(function() {
+                    var strategy = ary.shift();  //取出数组的第一项，pop取出最后一项
+                    ary.unshift(dom.value); //将其放入数组的首项，那跟push有什么区别呢？push()是用来在数组末端添加项
+                    ary.push(errorMsg);
+                    // [value, params, errorMsg] strategy 参数顺序
+                    return strategies[strategy].apply(dom, ary);
+                    // 若不符合则是返回报错内容,这里只是把这个方法push进去了，而不是直接执行了
+                    // strategies[strategy] strategy是对应的方法规则，也就相当于执行
+                })
+            },
+            start: function() {
+                // validateFunc = this.cache[i++]是判断语句，当为undefined则是false会退出
+                for (var i = 0, validateFunc;validateFunc = this.cache[i++];) {
+                    var msg = validateFunc();
+                    if (msg) {
+                        return msg;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <title>布局</title>
+    <style>
+      *{margin: 0;padding: 0;}
+      img{
+          width: 100%;
+      }
+      .container{
+          padding: 30px 50px;
+      }
+      .col-md-4{
+        padding-top: 10px;
+      }
+      .col-md-3 img{
+         height: 250px;
+         width: 150px;
+      }
+      .g_color{
+          color: #80B594;
+      }
+      tr{
+          line-height: 25px;
+      }
+      .tb{
+          display: block;
+      }
+      .td1{
+          width: 80px;
+      }
+      .sign_up{
+          margin-top: 20px;
+          border:1px solid #80b594;
+          border-radius: 3px;
+          height: 30px;
+          line-height: 30px;
+          width: 80px;
+          background: #80b594;
+          color: #ffffff;
+          font-size: 12px;
+      }
+      .active_start{
+          font-size: 10px;
+          color: #cccccc;
+          padding-left: 5px;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <a href="#">
+                    <img src="https://sfault-activity.b0.upaiyun.com/794/821/794821663-5b03b53a2d70a_big" alt="">
+                </a>
+            </div>
+            <div class="col-md-4">
+                <form action="">
+                    <table class="tb">
+                        <tr>
+                            <td class="td1">开始时间：</td>
+                            <td>2018-08-22 13:00 周三</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">结束时间：</td>
+                            <td>2018-08-22 17:00 周三</td>
+                        </tr>
+                        <tr>
+                            <td>举办地点：</td>
+                            <td class="g_color">深圳市深圳市南山区桂庙路北瑞峰大厦瑞峰创业中心</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">主板方：</td>
+                            <td class="g_color">光环</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">报名截止：</td>
+                            <td><span>85</span>天<span>16</span>时<span>08</span>分<span>04</span>秒</td>
+                        </tr>
+                    </table>
+                    <button class="sign_up">立即报名</button>
+                    <span class="active_start">活动即将开始</span>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <a href="http://www.baidu.com" target="_blank">
+                    <img src="https://api.map.baidu.com/staticimage?width=189&height=304&center=113.93211456546466,22.52968539448156&markers=113.93211456546466,22.52968539448156&zoom=17&scale=2">
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

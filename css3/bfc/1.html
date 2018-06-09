@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>margin重叠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            color: #ff5555;
+            background: #ffcccc;
+            width: 200px;
+            line-height: 100px;
+            text-align: center;
+            margin: 100px;
+        }
+
+        .p2 {
+            position: absolute;
+            top: 260px;
+            width: 200px;
+            background: blue;
+        }
+
+        .wrap {
+            overflow: hidden;
+        }
+
+        .wrap p {
+            margin-top: 150px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BFC Block formatting context 块级格式化上下文 -->
+    <!-- 文档 块 block 页面上占据位置 -->
+    <!-- 新的BFC overflow: hidden (不为visible) 新的空间， -->
+    <!-- 告诉浏览器，外面的环境影响不到我了，我重新来进行Block  -->
+    <!-- Formating 布局和定位。 -->
+    <!-- 核心是，新的BFC 给出了新的不受外界影响的块级格式化环境 -->
+
+
+
+    <!-- 定位 之前position才有的感觉
+    广义的定位 块级 垂直定位，行内元素， 左右，内容定位
+    float 在一行的左边或一行的右边定位
+    flex position
+
+    BFC 可以重建一个上下文环境 -->
+    <p>廖总真有钱</p>
+    <!-- 1 根元素会创建一个BFC环境 -->
+    <!-- 原来两个p 都在根body下 相同的上下文环境 BFC(并不会影响原来的文档内容，原来是什么样，现在还是什么样)
+    .wrap 并没有能力创建新的BFC-->
+    <!-- 两个外边界，长的那个会消融那个小一些的,以最大值来决定 -->
+    <div class="wrap">
+        <p>测试</p>
+
+        <h2 class="p2">发哥女朋友真漂亮</h2>
+    </div>
+    <span>测试2</span>
+
+    <!-- BFC的约束规则
+    同一个BFC的两个相邻Box de margin 会重叠，与方向无关
+
+    破坏规则，新的BFC Context 上下文的概念
+
+    如何创建BFC？ 重新划一块渲染区域(是指里面的按照原本文档流的，整体扩大某个方向的margin) 独立
+    块级（页面的基础Box） 格式化（渲染）
+    1 根元素 天然是一个BFC
+    2 overflow: hidden 是一个BFC 
+    3 float不为none(对于其根元素的BFC来说，它是0，但是对它父元素来说，父元素触发了BFC，就可以计算它的高度，清除浮动的效果)-->
+    <!-- 4 display inline-block table-cell table-caption  -->
+    <!-- 5 position: absolute fixed 只要不为static -->
+</body>
+
+</html>
